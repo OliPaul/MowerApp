@@ -21,7 +21,8 @@ lazy val root = (project in file("."))
       playJson,
       scalatic,
       scalaTest  % Test,
-      scalaCheck % Test
+      scalaCheck % Test,
+      scalaLogging
     ),
     // Wartremover
     wartremoverWarnings ++= Warts.unsafe,
