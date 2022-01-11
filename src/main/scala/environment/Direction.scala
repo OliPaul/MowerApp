@@ -1,5 +1,7 @@
 package environment
 
+import play.api.libs.json.{JsValue, Json, Writes}
+
 /** A trait used to represent the four cardinal directions: North, East, South and West
  *
  */
@@ -9,16 +11,14 @@ sealed trait Direction {
    *
    * @return   the next cardinal direction from the right
    */
-  def nextFromRight() : Direction
-
+  def nextFromRight(): Direction
 
   /** Gets the next cardinal direction from the left
    *
    * @return   the next cardinal direction from the left
    */
-  def nextFromLeft() : Direction
+  def nextFromLeft(): Direction
 }
-
 
 case object North extends Direction {
   override def nextFromLeft(): Direction = West
@@ -40,21 +40,31 @@ case object West extends Direction {
   override def nextFromRight(): Direction = North
 }
 
-
-
 object Direction {
 
-  /** Gets the cardinal direction corresponding to a String.
-   *
-   * @param s    the string corresponding to a cardinal direction
-   * @return     An option containing the cardinal direction if the string corresponds to any of the direction
-   *             None otherwise
-   */
   def apply(s: String): Option[Direction] = s match {
     case "N" => Some(North);
     case "E" => Some(East);
     case "S" => Some(South);
     case "W" => Some(West);
-    case _ => None
+    case _   => None
+  }
+}
+
+object WriteJsonDirection extends Writes[Direction] {
+  override def writes(value: Direction): JsValue = value match {
+    case North => Json.toJson("N")
+    case East  => Json.toJson("E")
+    case South => Json.toJson("S")
+    case _     => Json.toJson("W")
+  }
+}
+
+object WriteCsvDirection {
+  def writes(value: Direction): String = value match {
+    case North => "N;"
+    case East  => "E;"
+    case South => "S;"
+    case _     => "W;"
   }
 }
