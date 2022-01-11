@@ -12,7 +12,9 @@ class DirectionSpec extends AnyFunSuite {
     assert(Direction("S") === Some(South))
 
     val rightDirections = List("N", "E", "W", "S")
-    val wrongDirections = Gen.alphaStr suchThat (s => !rightDirections.contains(s))
+    val wrongDirections = Gen.alphaStr suchThat (
+        s => !rightDirections.contains(s)
+    )
 
     forAll(wrongDirections) { x =>
       Direction(x) === None

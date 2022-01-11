@@ -1,0 +1,5 @@
+package environment
+
+class Coordinates {
+
+}

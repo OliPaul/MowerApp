@@ -1,0 +1,5 @@
+package typeclasses
+
+object JsonPrint {
+
+}
